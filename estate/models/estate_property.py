@@ -8,7 +8,7 @@ class EstateProperty(models.Model):
     # def test(self):
     #     return fields.Datetime.now()
 
-    name = fields.Char(string="Property Name", default="Unknown", required=True)
+    name = fields.Char(string="Title", default="Unknown", required=True)
     description = fields.Text()
     postcode = fields.Char()
     date_availability = fields.Date(default=lambda self: fields.Datetime.now(), copy=False)
@@ -27,3 +27,4 @@ class EstateProperty(models.Model):
         ('west', 'West')        
         ])
     active = fields.Boolean(default=True)
+    image = fields.Image()
