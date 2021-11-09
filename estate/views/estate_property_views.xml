@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <record id="estate_property_offer_tree" model="ir.ui.view">
+        <field name="name">Estate Property Offer</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="price"/>
+                <field name="partner_id"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+
+
     <record id="estate_property_tree" model="ir.ui.view">
         <field name="name">Estate Property Name</field>
         <field name="model">estate.property</field>
@@ -22,8 +37,17 @@
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
-                        <field name="image" widget="image" class="oe_avatar"/>
+                        <field name="property_type_id"/>
                     </div>
+                    <group>
+                        <group>
+                            <field name="test_id"/>
+                            <field name="property_tag_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" class="oe_avatar"/>
+                        </group>
+                    </group>
                     <notebook>
                         <page string="Description">
                             <group>
@@ -59,6 +83,15 @@
                                 <group>
                                     <field name="garden_orientation"/>
                                 </group>
+                            </group>
+                        </page>
+                        <page string="Offer">
+                            <field name="property_offer_ids"/>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="salesman_id"/>
+                                <field name="buyer_id"/>
                             </group>
                         </page>
                     </notebook>
