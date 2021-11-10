@@ -1,5 +1,7 @@
 
-from odoo import models, fields
+from odoo import models, fields, api
+
+
 
 
 class Test(models.Model):
@@ -30,6 +32,7 @@ class EstatePropertOffer(models.Model):
 class EstatePropertyTag(models.Model):
     _name = 'estate.property.tag'
     _description = 'Estate Property Tag'
+
 
     name = fields.Char()
 
@@ -75,3 +78,13 @@ class EstateProperty(models.Model):
     test_id = fields.Many2one('test')
     property_tag_ids = fields.Many2many('estate.property.tag')
     property_offer_ids = fields.One2many('estate.property.offer', 'property_id')
+    total_area = fields.Integer(compute="_compute_area")
+
+
+    @api.depends('living_area', 'garden_area')
+    def _compute_area(self):
+        print("\n\n ----- _compute_area method call")
+        for record in self:
+            record.total_area = record.living_area + record.garden_area
+
+
