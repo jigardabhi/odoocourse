@@ -28,6 +28,7 @@ class EstatePropertOffer(models.Model):
     status = fields.Selection([('accepted', 'Accepted'),('refuse', 'Refused')])
     partner_id = fields.Many2one('res.partner')
     property_id = fields.Many2one('estate.property')
+    property_type_id = fields.Many2one(related='property_id.property_type_id', store=True)
 
     def action_accepted(self):
         for record in self:
@@ -57,6 +58,14 @@ class EstatePropertyType(models.Model):
 
     name = fields.Char()
     property_ids = fields.One2many('estate.property','property_type_id')
+    offer_ids = fields.One2many('estate.property.offer', 'property_type_id')
+    offer_count = fields.Integer(compute='_compute_offer_count')
+
+
+    @api.depends('offer_ids')
+    def _compute_offer_count(self):
+        for record in self:
+            record.offer_count =  len(record.offer_ids)
 
 
 
